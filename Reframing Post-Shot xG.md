@@ -22,7 +22,9 @@ Looking forward, after a shot is taken: the framework has been tweaked to update
 
 It's an elegant framework for ~~a more civilized age~~ action valuation that easily incorporates new innovations and increasingly sophisticated models as they become available. As tracking data becomes increasingly common in recruitment settings, off-ball player positioning will strengthen the underlying models and the framework will remain sturdy.
 
-But, there is a problem with the sharp end of the framework. The value that a player adds via shooting does not appear to be stable on a year-to-year basis. A positive `(PSxG - xG) / Shot` in one year does not seem to increase the chances of a positive residual in the following year. This leads to the troublesome implication which suggests finishing ability isn't as much a repeatable skill as it is a random effect. This heresy would get any analyst and their TI-84+ tossed out of any scouting meeting.
+But, there is a problem with the sharp end of the framework. The value that a player adds via shooting does not appear to be stable on a year-to-year basis. A positive `(PSxG - xG) / Shot` in one year does not seem to increase the chances of a positive residual in the following year[^4]. This leads to the troublesome implication which suggests finishing ability isn't as much a repeatable skill as it is a random effect. This heresy would get any analyst and their TI-84+ tossed out of any scouting meeting.
+
+[^4]: https://web.archive.org/web/20180527123605/http://www.optasportspro.com:80/about/optapro-blog/posts/2014/on-the-topic-of-expected-goals-and-the-repeatability-of-finishing-skill.aspx
 
 The purpose of this article is to suggest that our dogmatic reliance on the traditional Expected Goals framework has led us in the wrong direction when trying to disentangle finishing skill from the rest of the goalscoring process.
 
@@ -36,7 +38,9 @@ To demonstrate this effect, here is a cherry-picked visual:
 ![](https://github.com/devinpleuler/research/blob/master/src/example.png)
 Randomly sampling with `n=10`, the player with the worse accuracy (`σ = 0.7 meters`) can easily have a higher Post-Shot xG value despite it being pretty clear that the other player with the better underlying accuracy (`σ = 0.5 meters`) is likely to score more goals across a larger sample size.
 
-The best way to combat this overfitting is the allow off-target shots to retain some xG value; in turn crediting narrow misses with more value than wide misses. In other words, we need to extract more meaning out of every sample. However, it's not completely intuitive how this makes any conceptual sense.
+The best way to combat this overfitting is the allow off-target shots to retain some xG value; in turn crediting narrow misses with more value than wide misses. This isn't an entirely new concept: I collaborated with some very smart people last year to take a stab at the concept[^5]. In other words, we need to extract more meaning out of every sample. However, it's not completely intuitive how this makes any conceptual sense.
+
+[^5]: https://www.youtube.com/watch?v=zQCl1cL-JxA
 
 To demonstrate, we train a goal expectation model that estimates xG based on the shot trajectory error, as opposed to just using the shot destination. This makes sense if we're interested in rewarding process instead of results. Ultimately we want to credit a player who strikes the ball accurately, no matter which side of the post it happens to end up.
 
@@ -54,12 +58,12 @@ At its core, this model is very simple. It pairs an initial xG measure with a sh
 And this is what it looks like with `xG=0.1`:
 ![](https://github.com/devinpleuler/research/blob/master/src/xg01.png)As this is a toy model for demonstration purposes, we've thrown an easy-to-implement classification model at this. XGBoost can easily be replaced with alternatives as simple as a logistic regression, or something wildly more sophisticated. But regardless of model architecture, the trick here is in preventing the model from learning too much by engineering your features carefully.
 
-Now, it's worth comparing this "naive" Post-Shot xG model to both classic xG models and Post-Shot xG Models. Below are the ROC curves for these three models.
+Now, it's worth comparing this "naive"[^6] Post-Shot xG model to both classic xG models and Post-Shot xG Models. Below are the ROC curves for these three models.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/roc.png)
 As you would expect, when used to predict goals, our Naive PSxG model performs better than raw Expected Goals (as it includes some trajectory information), but not as strongly as the standard Post-Shot Expected Goals (as it includes less trajectory information).
 
-> As a note: I recognize that I'm not using "naive" in the fashion it is typically used in statistical jargon. It's more of a literal description as I am intentionally withholding some of the spatial context from its input features. Would love to hear different naming ideas.
+[^6]: I recognize that I'm not using "naive" in the fashion it is typically used in statistical jargon. It's more of a literal description as I am intentionally withholding some of the spatial context from its input features. Would love to hear different naming ideas.
 
 But does it do a better job at predicting future performance? Well, this is a more difficult question than it seems and probably needs someone to do a more rigorous (and frankly, more academic) study than mine.
 
