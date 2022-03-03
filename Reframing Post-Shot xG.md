@@ -61,6 +61,7 @@ And this is what it looks like with `xG=0.1`:
 Now, it's worth comparing this "naive"[^6] Post-Shot xG model to both classic xG models and Post-Shot xG Models. Below are the ROC curves for these three models.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/roc.png)
+
 As you would expect, when used to predict goals, our Naive PSxG model performs better than raw Expected Goals (as it includes some trajectory information), but not as strongly as the standard Post-Shot Expected Goals (as it includes less trajectory information).
 
 [^6]: I recognize that I'm not using "naive" in the fashion it is typically used in statistical jargon. It's more of a literal description as I am intentionally withholding some of the spatial context from its input features. Would love to hear different naming ideas.
