@@ -38,7 +38,7 @@ To demonstrate this effect, here is a cherry-picked visual:
 ![](https://github.com/devinpleuler/research/blob/master/src/example.png)
 Randomly sampling with `n=10`, the player with the worse accuracy (`σ = 0.7 meters`) can easily have a higher Post-Shot xG value despite it being pretty clear that the other player with the better underlying accuracy (`σ = 0.5 meters`) is likely to score more goals across a larger sample size.
 
-The best way to combat this overfitting is the allow off-target shots to retain some xG value; in turn crediting narrow misses with more value than wide misses. This isn't an entirely new concept: I collaborated with some very smart people last year to take a stab at the concept[^5]. In other words, we need to extract more meaning out of every sample. However, it's not completely intuitive how this makes any conceptual sense.
+The best way to combat this overfitting is the allow off-target shots to retain some xG value; in turn crediting narrow misses with more value than wide misses[^5]. In other words, we need to extract more meaning out of every sample. However, it's not completely intuitive how this makes any conceptual sense.
 
 [^5]: Ethan Baron: Predictive Value of Off-Target Shots in Soccer, NESSIS 2021: https://www.youtube.com/watch?v=zQCl1cL-JxA
 
