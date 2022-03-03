@@ -74,6 +74,6 @@ However, I am confident that `(Naive PSxG - xG) / shot` is considerably more sta
 
 To briefly explain the methodology: for every qualifying player, I've taken their n shots, shuffled them, and split them into two equally sized samples. In the visual, I've plotted the mean residuals in each sample across each other.
 
-If it isn't already clear, the naive approach provides considerably more stability – where the traditional approach, as alluded to above, has practically no repeatability (`r_values = 0.03, 0.57`). For certain use cases, this Naive approach to Post-Shot Expected Goals provides the best of both worlds: the model precision of PSxG without sacrificing the player-level stability of xG.
+If it isn't already clear, the naive approach provides considerably more stability – where the traditional approach, as alluded to above, has practically no repeatability (`r_values = 0.57 & 0.03`). For certain use cases, this Naive approach to Post-Shot Expected Goals provides the best of both worlds: the model precision of PSxG without sacrificing the player-level stability of xG.
 
 There remains a lot of room for improvement here, but I think this is compelling evidence that this sort of modelling approach may prove fruitful for better understanding underlying finishing ability.
