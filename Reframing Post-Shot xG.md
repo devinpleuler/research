@@ -1,5 +1,6 @@
-Reframing Post-Shot xG
-March 2022
+## **Reframing Post-Shot xG**
+
+#### ***Devin Pleuler | March 2022***
 
 Expected Goals are ubiquitous. It's jumped off the esoteric analytics blog posts of the 2010's and on to your television screens and into your video games, but also sporting club databases and pitch-side tablets. 
 
@@ -13,7 +14,8 @@ Looking forward, after a shot is taken: the framework has been tweaked to update
 
 (And naturally, the next step in this value framework leads us to `G-PSxG`, which is quite useful for evaluating goalkeepers)
 
-![[xg_value_progression.png]]
+!(Value Progression)[./src/xg_value_progression.png]
+
 It's an elegant framework for ~~a more civilized age~~ action valuation that easily incorporates new innovations and increasingly sophisticated models as they become available. As tracking data becomes increasingly common in recruitment settings, off-ball player positioning will strengthen the underlying models and the framework will remain sturdy.
 
 But, there is a problem with the sharp end of the framework. The value that a player adds via shooting does not appear to be stable on a year-to-year basis. A positive `(PSxG - xG) / Shot` in one year does not seem to increase the chances of a positive residual in the following year. This leads to the troublesome implication which suggests finishing ability isn't as much a repeatable skill as it is a random effect. This heresy would get any analyst and their TI-84+ tossed out of any scouting meeting.
