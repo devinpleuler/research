@@ -14,7 +14,7 @@ Looking forward, after a shot is taken: the framework has been tweaked to update
 
 (And naturally, the next step in this value framework leads us to `G-PSxG`, which is quite useful for evaluating goalkeepers)
 
-!(Value Progression)[./src/xg_value_progression.png]
+![](https://github.com/devinpleuler/research/blob/master/src/xg_value_progression.png)
 
 It's an elegant framework for ~~a more civilized age~~ action valuation that easily incorporates new innovations and increasingly sophisticated models as they become available. As tracking data becomes increasingly common in recruitment settings, off-ball player positioning will strengthen the underlying models and the framework will remain sturdy.
 
@@ -29,7 +29,7 @@ While this modelling decision is reasonable for the primary purpose of predictin
 This issue is exacerbated by a lack of sample size. From a `goals / shot` perspective,  players rarely attempt enough shots in a season to reliably conclude that they are above-or-below average in terms of finishing with any sort of statistical significance. If we had huge samples, this problem likely goes away.
 
 To demonstrate this effect, here is a cherry-picked visual:
-![[Pasted image 20220112144818.png]]
+![](https://github.com/devinpleuler/research/blob/master/src/example.png)
 Randomly sampling with `n=10`, the player with the worse accuracy (`σ = 0.7 meters`) can easily have a higher Post-Shot xG value despite it being pretty clear that the other player with the better underlying accuracy (`σ = 0.5 meters`) is likely to score more goals across a larger sample size.
 
 The best way to combat this overfitting is the allow off-target shots to retain some xG value; in turn crediting narrow misses with more value than wide misses. In other words, we need to extract more meaning out of every sample. However, it's not completely intuitive how this makes any conceptual sense.
@@ -46,14 +46,13 @@ model.fit(X, y)
 ```
 
 At its core, this model is very simple. It pairs an initial xG measure with a shot trajectory error and spits out a different flavor of Post-Shot xG. However, we can exploit the spatial nature of the trajectory errors and evaluate the model across all z-coordinates along the goal line axis to create a value surface. Adding a contour plot for aesthetics, below is what the value distribution looks for a shot with an initial `xG=0.4` for actual shot destinations. It's not perfect, but sensical!
-![[Pasted image 20220112155340.png]]
+![](https://github.com/devinpleuler/research/blob/master/src/xg04.png)
 And this is what it looks like with `xG=0.1`:
-![[Pasted image 20220112155714.png]]
-As this is a toy model for demonstration purposes, we've thrown an easy-to-implement classification model at this. XGBoost can easily be replaced with alternatives as simple as a logistic regression, or something wildly more sophisticated. But regardless of model architecture, the trick here is in preventing the model from learning too much by engineering your features carefully.
+![](https://github.com/devinpleuler/research/blob/master/src/xg01.png)As this is a toy model for demonstration purposes, we've thrown an easy-to-implement classification model at this. XGBoost can easily be replaced with alternatives as simple as a logistic regression, or something wildly more sophisticated. But regardless of model architecture, the trick here is in preventing the model from learning too much by engineering your features carefully.
 
 Now, it's worth comparing this "naive" Post-Shot xG model to both classic xG models and Post-Shot xG Models. Below are the ROC curves for these three models.
 
-![[Pasted image 20220112161502.png]]
+![](https://github.com/devinpleuler/research/blob/master/src/roc.png)
 As you would expect, when used to predict goals, our Naive PSxG model performs better than raw Expected Goals (as it includes some trajectory information), but not as strongly as the standard Post-Shot Expected Goals (as it includes less trajectory information).
 
 > As a note: I recognize that I'm not using "naive" in the fashion it is typically used in statistical jargon. It's more of a literal description as I am intentionally withholding some of the spatial context from its input features. Would love to hear different naming ideas.
@@ -62,7 +61,7 @@ But does it do a better job at predicting future performance? Well, this is a mo
 
 However, I am confident that `(Naive PSxG - xG) / shot` is considerably more stable on a player-level basis than  `(PSxG - xG) / shot`, at least across my sample of 269 players who have attempted at least 50 shots.
 
-![[Pasted image 20220303144601.png]]
+![](https://github.com/devinpleuler/research/blob/master/src/stability.png)
 
 To briefly explain the methodology: for every qualifying player, I've taken their n shots, shuffled them, and split them into two equally sized samples. In the visual, I've plotted the mean residuals in each sample across each other.
 
