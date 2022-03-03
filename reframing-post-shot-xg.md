@@ -8,11 +8,11 @@ Its rapid proliferation can perhaps be attributed to the same reason why its pro
 
 While the shot-by-shot version of xG is most well known and widely understood, most analysts would claim that the true innovation of xG is the action-value framework that records the fluctuations of goalscoring probability as a possession unfolds.
 
-Looking backward before shots are taken: xG is used as a unit in Expected Possession Value (i.e. EPV, or others like xT[^1] or VAEP[^2], and Sarah Rudd's Markov Chains [^3]) which is used to estimate the value gained by moving the ball from low-danger to high-danger situations. This is quite useful for appreciating the value added by players who aren't typically directly involved in the goalscoring process, like a talented defensive midfielder who breaks line after line. 
+Looking backward before shots are taken: xG is used as a unit in Expected Possession Value (i.e. EPV, or others like xT[^1] or VAEP[^2], and others) which is used to estimate the value gained by moving the ball from low-danger to high-danger situations. This is quite useful for appreciating the value added by players who aren't typically directly involved in the goalscoring process, like a talented defensive midfielder who breaks line after line.[^3] 
 
 [^1]:https://karun.in/blog/expected-threat.html
 [^2]: https://arxiv.org/pdf/1802.07127.pdf
-[^3]: http://nessis.org/nessis11/rudd.pdf
+[^3]: While it predates xG, Sarah Rudd at NESSIS '11 was probably the first to work with this concept: http://nessis.org/nessis11/rudd.pdf
 
 Looking forward, after a shot is taken: the framework has been tweaked to update the original xG measure to incorporate the post-shot ball trajectory. For example, an 0.10 xG shot might become a 0.50 xG shot if it's stuck toward the upper corner of the goal. By comparing the predicted measures of xG and PSxG (i.e. Post-Shot Expected Goals) you can get a grasp of which shots are well-taken, and by extension: the cumulative value added by players who have taken them.
 
