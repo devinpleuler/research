@@ -6,21 +6,27 @@ Soccer is often compared to chess. Pregame lineups on television broadcasts rese
 
 The rigours of modern soccer have required players to become increasingly flexible, often occupying multiple roles as the game unfolds. This requirement has been exacerbated by the growing trend of teams playing dynamic and asymmetrical formations, with team technicians building rotations directly into their game models.
 
-For example, a player assigned as a right defender may be asked to present themselves as a right winger when the true winger pinches inward and behaves like an attacking central midfielder. This is one of the most common rotations in modern soccer today, but there are plenty of others.
+For example, a player assigned as a left defender may be asked to present themselves as a left winger when the true winger pinches inward and behaves like a central attacking midfielder. This is one of the most common rotations in modern soccer today, but there are plenty of others.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/4231.png)
 
 Technical staff monitor these rotations but they're difficult to systematically catalogue amidst the chaotic environment of a soccer game, especially as they can cause cascading role reassignment across an entire team. It would be useful to automatically detect and analyze these positional rotations for a multitude of reasons.
 
-There is already some outstanding research on team structure. My particular favourite being Dynamic Analysis of Team Strategy in Professional Football by Shaw & Glickman. I've borrowed bits and pieces from that paper. In particular, the observation of team formation as a set of player-wise bivariate distributions. While Shaw and Glickman approach this in a more complicated manner, I take an easier path by normalizing player positions relative to a team centroid (like Gregory does in Ready Player Run: Off-ball run identification and classification). This dramatically minimizes the covariance of individual player distributions.
+There is already some outstanding research on team structure. My particular favourite being Dynamic Analysis of Team Strategy in Professional Football[^1] by Shaw & Glickman. I've borrowed bits and pieces from that paper. In particular, the observation of team formation as a set of player-wise bivariate distributions.
+
+[^1]: https://static.capabiliaserver.com/frontend/clients/barcanew/wp_prod/wp-content/uploads/2020/01/56ce723e-barca-conference-paper-laurie-shaw.pdf
+
+While Shaw and Glickman approach this in a more complicated manner, I take an easier path by normalizing player positions relative to a team centroid (like Gregory does in Ready Player Run: Off-ball run identification and classification[^2]). This dramatically minimizes the covariance of individual player distributions.
+
+[^2]: https://static.capabiliaserver.com/frontend/clients/barca/wp_prod/wp-content/uploads/2020/01/ed15d067-ready-player-run-barcelona-paper-sam-gregory.pdf
 
 ![](https://github.com/devinpleuler/research/blob/master/src/formations.png)
 
-As opposed to traditional approaches, this style of visualization is helpful for demonstrating the variability that serves as the motivation for this work. But it's not perfect. The prevalence of rotations in modern tactical canon suggests that many player positions are not normally distributed, or entirely non-parametric. Depends on the player.
+As opposed to traditional approaches, this style of visualization is helpful for demonstrating the variability that serves as the motivation for this work. But it's not perfect. The prevalence of rotations in modern tactical practice suggests that many player positions are not normally distributed, or entirely non-parametric. Depends on the player.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/lw.png)
 
-This underscores the utility in classifying the role that a particular player is occupying on a frame-by-frame basis.
+This emphasizes the utility in classifying the role that a particular player is occupying on a frame-by-frame basis.
 
 To start, let's plant ourselves directly in the boots of a right defender.
 
