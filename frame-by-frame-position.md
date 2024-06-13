@@ -52,7 +52,7 @@ For these labels, we utilize the position categorization conventions used in Sta
 
 The model selection to map the player-level spatial features to their positional labels is not particularly important. For the purposes of this research, we used a vanilla XGBoost classifier, but you can almost certainly achieve similar-to-better results with different flavours and sophistication of approaches.
 
-![](https://github.com/devinpleuler/research/blob/master/src/xbg.png)
+![](https://github.com/devinpleuler/research/blob/master/src/xgb.png)
 
 Here is an example inference, and the related tracking frame.
 
