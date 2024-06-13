@@ -64,7 +64,7 @@ Here is an example tracking frame and the related inference:
 
 ![](https://github.com/devinpleuler/research/blob/master/src/predictions.png)
 
-Pretty nice! The model incorrectly assigns three labels, but they're all pretty sensical mistakes!
+Pretty nice! The model incorrectly assigns three labels, but they're all pretty sensible mistakes!
 
 - The right defensive midfielder has dropped between the center backs, and the model thinks they're a central defender.
 - The central attacking midfielder is sitting a little deeper on the left side, and is labelled as a left defensive midfielder.
