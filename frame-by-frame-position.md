@@ -4,15 +4,15 @@
 
 Soccer is often compared to chess. Pregame lineups on television broadcasts resemble the start of a chess game, with rigid and symmetrical lines of actors categorized into different functions and affixed to either side of the playing surface. Unfortunately, the parallels quickly melt away after kickoff.
 
-The rigours of modern soccer have required players to become increasingly flexible, often occupying multiple roles as the game unfolds. This requirement has been exacerbated by the growing trend of teams playing dynamic and asymmetrical formations, with team technicians building rotations directly into their game models.
+The rigors of modern soccer have required players to become increasingly flexible, often occupying multiple roles as the game unfolds. This requirement has been exacerbated by the growing trend of teams playing dynamic and asymmetrical formations, with team technicians building rotations directly into their game models.
 
 For example, a player assigned as a left defender may be asked to present themselves as a left winger when the true winger pinches inward and behaves like a central attacking midfielder. This is one of the most common rotations in modern soccer today, but there are plenty of others.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/4231.png)
 
-Technical staff monitor these rotations but they're difficult to systematically catalogue amidst the chaotic environment of a soccer game, especially as they can cause cascading role reassignment across an entire team. It would be useful to automatically detect and analyze these positional rotations for a multitude of reasons.
+Technical staff monitor these rotations but they're difficult to systematically catalog amidst the chaotic environment of a soccer game, especially as they can cause cascading role reassignment across an entire team. It would be useful to automatically detect and analyze these positional rotations for a multitude of reasons.
 
-There is already some outstanding research on team structure. My particular favourite being Dynamic Analysis of Team Strategy in Professional Football[^1] by Shaw & Glickman. I've borrowed bits and pieces from that paper. In particular, the observation of team formation as a set of player-wise bivariate distributions.
+There is already some outstanding research on team structure. My particular favorite being Dynamic Analysis of Team Strategy in Professional Football[^1] by Shaw & Glickman. I've borrowed bits and pieces from that paper. In particular, the observation of team formation as a set of player-wise bivariate distributions.
 
 [^1]: https://static.capabiliaserver.com/frontend/clients/barcanew/wp_prod/wp-content/uploads/2020/01/56ce723e-barca-conference-paper-laurie-shaw.pdf
 
@@ -48,35 +48,35 @@ This relationship between angular orientation and visible teammate count is intu
 
 ![](https://github.com/devinpleuler/research/blob/master/src/radar.png)
 
-When unfurled, these waveforms have very soccer-interpretable properties. For example, a left and right defender would have similar amplitude, but they would be phase-shifted by half a period.
+If unfurled, the waveform of a left and right defender would have similar amplitude, but they would be phase-shifted by half a period.
 
-Features extracted from these waves can be used to assemble a classification model that can assign a current position to each player on a frame-by-frame basis.
+Features extracted from these waves can be used to train a classification model that can assign a current position to each player on a frame-by-frame basis.
 
 For a supervised classification approach, we require ground truth labels to be aligned with the frame-wise player tracking data. Fortunately, most players occupy their assigned roles for a majority of the game. Positional rotations are increasingly common, but they are mostly fleeting and quickly revert into the status quo after a specific tactical moment has resolved.
 
 For these labels, we utilize the position categorization conventions used in Statsbomb's event data specification as they are well balanced between generality and specificity. But of course, these methods will work just fine with alternative position maps.
 
-The model selection to map the player-level spatial features to their positional labels is not particularly important. For the purposes of this research, we used a vanilla XGBoost classifier, but you can almost certainly achieve similar-to-better results with different flavours and sophistication of approaches.
+The model selection to map the player-level spatial features to their positional labels is not particularly important. For the purposes of this research, we used a vanilla XGBoost classifier, but you can almost certainly achieve similar-to-better results with different flavors and sophistication of approaches.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/xgb.png)
 
-Here is an example inference, and the related tracking frame.
+Here is an example tracking frame and the related inference:
 
 ![](https://github.com/devinpleuler/research/blob/master/src/predictions.png)
 
-Pretty nice! The model incorrectly assigns three labels, but they're all pretty sensical! It's also worth mentioning that this example is not in the training data set.
+Pretty nice! The model incorrectly assigns three labels, but they're all pretty sensical mistakes!
 
 - The right defensive midfielder has dropped between the center backs, and the model thinks they're a central defender.
 - The central attacking midfielder is sitting a little deeper on the left side, and is labelled as a left defensive midfielder.
-- The left defensive midfielder has found themselves on their opposite side, and the model assumes they're a right defensive midfielder.
+- The left defensive midfielder is marauding up the opposite side, and the model reasonably assumes they're a right defensive midfielder.
 
 We can construct a confusion matrix after running these inferences for every frame across an entire game to understand how well the model is performing.
 
-Notice that the matrix is truncated. This is because not every position label has a corresponding player sample in this particular game (and some true position labels actually don't exist in the training data). In this example, the team did not line up with a central defender, but players were occasionally classified as such over the course of the game.
+Notice that the matrix is truncated in the y-dimension. This is because not every position label has a corresponding player sample in this particular game. In this example, the team did not line up with a central defender, but players were occasionally classified as such over the course of the game.
 
 ![](https://github.com/devinpleuler/research/blob/master/src/confusion.png)
 
-This is quite helpful for validating the behaviour of our model. The left defensive midfielder very rarely presents themselves as a center back. Conversely, the right defensive midfielder quite frequently is found in a position that resembles a center back. This sort of asymmetry can provide vital insight into a team's preferred tactical rotations. 
+This is quite helpful for validating the behavior of our model. The left defensive midfielder very rarely presents themselves as a center back. Conversely, the right defensive midfielder quite frequently is found in a position that resembles a center back. This sort of asymmetry can provide vital insight into a team's preferred tactical rotations. 
 
 The model does not perfectly predict goalkeeper labels, which is suggestive that we're not over-fitting. Since the input features are purely geometric, you can easily imagine the model being confused by the rare set piece situation where the goalkeeper may not be the closest player to their goal.
 
